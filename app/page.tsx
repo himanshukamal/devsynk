@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import {
   useEffect,
@@ -11,7 +10,7 @@ import {
 } from "react";
 
 const NAV_LINKS = ["About", "Services", "Pricing", "Contact"];
-const CELL_SIZE = 100;
+const DEFAULT_CELL_SIZE = 100;
 const TRAIL_LIMIT = 5;
 const RANDOM_COLORS = ["accent-a", "accent-b", "accent-c", "accent-d"];
 const RANDOM_CELL_COUNT = 6;
@@ -19,21 +18,43 @@ const RANDOM_CELL_COUNT = 6;
 type GridCell = { row: number; col: number };
 type ColoredCell = GridCell & { tone: string; id: string };
 
+const readCellSize = () => {
+  if (typeof window === "undefined") return DEFAULT_CELL_SIZE;
+  const raw = parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue("--cell-size"),
+  );
+  return Number.isFinite(raw) ? raw : DEFAULT_CELL_SIZE;
+};
+
 export default function Home() {
   const [gridSize, setGridSize] = useState({ rows: 0, cols: 0 });
+  const [cellSize, setCellSize] = useState(() => readCellSize());
   const [hoverCell, setHoverCell] = useState<GridCell | null>(null);
   const [trail, setTrail] = useState<GridCell[]>([]);
   const [showTrail, setShowTrail] = useState(false);
   const [coloredCells, setColoredCells] = useState<ColoredCell[]>([]);
+  const [menuOpen, setMenuOpen] = useState(false);
   const idleTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const updateCellSize = () => {
+      setCellSize(readCellSize());
+    };
+
+    updateCellSize();
+    window.addEventListener("resize", updateCellSize);
+    return () => window.removeEventListener("resize", updateCellSize);
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const updateGridSize = () => {
       setGridSize({
-        rows: Math.ceil(window.innerHeight / CELL_SIZE),
-        cols: Math.ceil(window.innerWidth / CELL_SIZE),
+        rows: Math.ceil(window.innerHeight / cellSize),
+        cols: Math.ceil(window.innerWidth / cellSize),
       });
     };
 
@@ -41,15 +62,15 @@ export default function Home() {
     window.addEventListener("resize", updateGridSize);
 
     return () => window.removeEventListener("resize", updateGridSize);
-  }, []);
+  }, [cellSize]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const handlePointerMove = (event: PointerEvent) => {
       const nextCell: GridCell = {
-        row: Math.floor(event.clientY / CELL_SIZE),
-        col: Math.floor(event.clientX / CELL_SIZE),
+        row: Math.floor(event.clientY / cellSize),
+        col: Math.floor(event.clientX / cellSize),
       };
 
       setHoverCell(nextCell);
@@ -169,10 +190,10 @@ export default function Home() {
               className={`hero__grid-cell hero__grid-cell--colored hero__grid-cell--${cell.tone}`}
               style={
                 {
-                  width: `${CELL_SIZE}px`,
-                  height: `${CELL_SIZE}px`,
-                  top: `${cell.row * CELL_SIZE}px`,
-                  left: `${cell.col * CELL_SIZE}px`,
+                  width: `${cellSize}px`,
+                  height: `${cellSize}px`,
+                  top: `${cell.row * cellSize}px`,
+                  left: `${cell.col * cellSize}px`,
                 } as CSSProperties
               }
             />
@@ -184,16 +205,37 @@ export default function Home() {
               className={getCellClass(cell)}
               style={
                 {
-                  width: `${CELL_SIZE}px`,
-                  height: `${CELL_SIZE}px`,
-                  top: `${cell.row * CELL_SIZE}px`,
-                  left: `${cell.col * CELL_SIZE}px`,
+                  width: `${cellSize}px`,
+                  height: `${cellSize}px`,
+                  top: `${cell.row * cellSize}px`,
+                  left: `${cell.col * cellSize}px`,
                 } as CSSProperties
               }
             />
           ))}
         </div>
       </div>
+      <div
+        className={`hero__sidebar-overlay${menuOpen ? " hero__sidebar-overlay--active" : ""}`}
+        onClick={() => setMenuOpen(false)}
+      />
+      <aside className={`hero__sidebar${menuOpen ? " hero__sidebar--open" : ""}`}>
+        <button
+          className="hero__sidebar-close"
+          type="button"
+          aria-label="Close navigation"
+          onClick={() => setMenuOpen(false)}
+        >
+          ×
+        </button>
+        <nav className="hero__sidebar-links">
+          {NAV_LINKS.map((link) => (
+            <a key={link} href="#" onClick={() => setMenuOpen(false)}>
+              {link}
+            </a>
+          ))}
+        </nav>
+      </aside>
 
       <header className="hero__nav">
         <div className="hero__nav-inner">
@@ -210,6 +252,17 @@ export default function Home() {
               </a>
             ))}
           </nav>
+          <button
+            className="hero__menu-button"
+            type="button"
+            aria-label="Open navigation"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((prev) => !prev)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
         </div>
       </header>
 
