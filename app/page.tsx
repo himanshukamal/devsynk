@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   useEffect,
   useMemo,
@@ -195,73 +196,28 @@ export default function Home() {
       </div>
 
       <header className="hero__nav">
-        <div className="hero__brand">
-          <span className="hero__logo" aria-hidden="true">
-            <svg width="40" height="40" viewBox="0 0 48 48" role="presentation">
-              <rect
-                x="7"
-                y="7"
-                width="34"
-                height="34"
-                rx="6"
-                fill="none"
-                strokeWidth="2"
-                stroke="currentColor"
-              />
-              <polyline
-                points="18,27 24,20 32,28"
-                fill="none"
-                strokeWidth="2"
-                stroke="currentColor"
-              />
-              <circle cx="32" cy="20" r="2" fill="currentColor" />
-            </svg>
-          </span>
-          <span className="hero__brand-text">Dev Sync</span>
+        <div className="hero__nav-inner">
+          <div className="hero__brand">
+           
+            <span className="hero__brand-text">
+              <Image src={"/devsynkLogoLight.png"} alt="DevSync Logo" width={219} height={51} />
+            </span>
+          </div>
+          <nav className="hero__links">
+            {NAV_LINKS.map((link) => (
+              <a key={link} href="#">
+                {link}
+              </a>
+            ))}
+          </nav>
         </div>
-        <nav className="hero__links">
-          {NAV_LINKS.map((link) => (
-            <a key={link} href="#">
-              {link}
-            </a>
-          ))}
-        </nav>
       </header>
 
-      <section className="hero__content">
-        <div className="hero__symbol" aria-hidden="true">
-          <svg width="80" height="80" viewBox="0 0 64 64" role="presentation">
-            <rect
-              x="12"
-              y="12"
-              width="40"
-              height="40"
-              rx="4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            />
-            <polyline
-              points="22,40 30,30 38,38"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            />
-            <line
-              x1="38"
-              y1="24"
-              x2="48"
-              y2="24"
-              stroke="currentColor"
-              strokeWidth="2"
-            />
-            <circle cx="48" cy="24" r="2" fill="currentColor" />
-          </svg>
-        </div>
-        <h1>Dev Sync</h1>
+      <section className="hero__content mt-[50px]">
+        
+        <h1>Web Experiences that don’t just feel good - They Perform .</h1>
         <p>
-          Fast, custom websites built for conversion and growth. No templates—
-          just precision craftsmanship.
+        custom-built, high-performance websites and application designed to convert, engage,and scale your business. No templates. just powerful digital experiences.
         </p>
         <button type="button" className="hero__cta">
           Let&apos;s Connect

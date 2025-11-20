@@ -4,6 +4,9 @@
   --color-deep: #384959;
   --color-light: rgba(56, 73, 89, 0.03);
   --color-pill: #21303f;
+  --grid-line: rgba(214, 216, 223, 0.66);
+  --mask-start: #e0e1e2;
+  --mask-end: #ffffff;
   --square-faint: rgba(56, 73, 89, 0.03);
   --square-soft: rgba(56, 73, 89, 0.05);
   --square-mid: rgba(56, 73, 89, 0.08);
@@ -25,6 +28,11 @@ body {
   font-family: var(--font-geist-sans, "Inter", -apple-system, BlinkMacSystemFont, sans-serif);
   color: var(--color-deep);
   background-color: var(--color-light);
+  background-image:
+    linear-gradient(var(--grid-line) 0, var(--grid-line) 2px, transparent 2px),
+    linear-gradient(90deg, var(--grid-line) 0, var(--grid-line) 2px, transparent 2px);
+  background-size: 100px 100px;
+  background-position: 0 0, 0 0;
 }
 
 main {
@@ -42,6 +50,7 @@ main {
   align-items: center;
   gap: 3rem;
   isolation: isolate;
+  padding-top: 160px;
 }
 
 .hero__grid {
@@ -50,6 +59,27 @@ main {
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
+}
+.hero__grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  top: 86px;
+  width: 100%;
+  /* height: 280px; */
+  
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(255, 255, 255, 0.65) 0%,
+      rgba(255, 255, 255, 0.35) 40%,
+      rgba(255, 255, 255, 0) 70%
+    ),
+    linear-gradient(180deg, rgba(224, 225, 226, 0.6) 0%, rgba(255, 255, 255, 0) 42%),
+    linear-gradient(0deg, rgba(224, 225, 226, 0.6) 0%, rgba(255, 255, 255, 0) 42%);
 }
 
 .hero__grid-canvas {
@@ -115,17 +145,28 @@ main {
 }
 
 .hero__nav {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 86px;
   z-index: 5;
-  width: min(900px, 100%);
-  border-radius: 999px;
-  background-color: var(--color-deep);
+  border-radius: 0;
+  background-color: var(--color-pill);
   color: #f6f8fb;
-  padding: 0.85rem 1.6rem;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 20px 40px rgba(56, 73, 89, 0.25);
+  
+}
+
+.hero__nav-inner {
+  width: min(1200px, 100%);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 20px 40px rgba(56, 73, 89, 0.25);
 }
 
 .hero__brand {
@@ -157,7 +198,7 @@ main {
 }
 
 .hero__links a {
-  color: inherit;
+  color: white;
   padding: 0.35rem 0.5rem;
   border-radius: 999px;
   text-decoration: none;
