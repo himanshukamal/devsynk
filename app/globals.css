@@ -4,7 +4,7 @@
   --color-deep: #384959;
   --color-light: rgba(56, 73, 89, 0.03);
   --color-pill: #21303f;
-  --grid-line: rgba(214, 216, 223, 0.66);
+  --grid-line: #d6d8df;
   --mask-start: #e0e1e2;
   --mask-end: #ffffff;
   --square-faint: rgba(56, 73, 89, 0.03);
@@ -66,20 +66,16 @@ main {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  mix-blend-mode: screen;
-  top: 86px;
-  width: 100%;
-  /* height: 280px; */
-  
   background:
     radial-gradient(
       circle at 50% 45%,
-      rgba(255, 255, 255, 0.65) 0%,
-      rgba(255, 255, 255, 0.35) 40%,
-      rgba(255, 255, 255, 0) 70%
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0.85) 35%,
+      rgba(255, 255, 255, 0.2) 65%,
+      rgba(255, 255, 255, 0) 80%
     ),
-    linear-gradient(180deg, rgba(224, 225, 226, 0.6) 0%, rgba(255, 255, 255, 0) 42%),
-    linear-gradient(0deg, rgba(224, 225, 226, 0.6) 0%, rgba(255, 255, 255, 0) 42%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 40%),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 40%);
 }
 
 .hero__grid-canvas {
