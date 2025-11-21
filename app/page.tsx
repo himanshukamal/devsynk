@@ -76,10 +76,20 @@ export default function Home() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const handlePointerMove = (event: PointerEvent) => {
+    const resetTrail = () => {
+      setHoverCell(null);
+      setTrail([]);
+      setShowTrail(false);
+      if (idleTimeoutRef.current !== null) {
+        window.clearTimeout(idleTimeoutRef.current);
+        idleTimeoutRef.current = null;
+      }
+    };
+
+    const updateFromCoordinates = (clientX: number, clientY: number) => {
       const nextCell: GridCell = {
-        row: Math.floor(event.clientY / cellSize),
-        col: Math.floor(event.clientX / cellSize),
+        row: Math.floor(clientY / cellSize),
+        col: Math.floor(clientX / cellSize),
       };
 
       setHoverCell(nextCell);
@@ -103,26 +113,34 @@ export default function Home() {
       }, 180);
     };
 
-    const handlePointerLeave = () => {
-      setHoverCell(null);
-      setTrail([]);
-      setShowTrail(false);
-      if (idleTimeoutRef.current !== null) {
-        window.clearTimeout(idleTimeoutRef.current);
-      }
+    const handlePointerMove = (event: PointerEvent) => {
+      updateFromCoordinates(event.clientX, event.clientY);
     };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      updateFromCoordinates(touch.clientX, touch.clientY);
+    };
+
+    const handlePointerLeave = () => resetTrail();
+    const handleTouchEnd = () => resetTrail();
 
     window.addEventListener("pointermove", handlePointerMove);
     window.addEventListener("pointerleave", handlePointerLeave);
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd);
+    window.addEventListener("touchcancel", handleTouchEnd);
 
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("pointerleave", handlePointerLeave);
-      if (idleTimeoutRef.current !== null) {
-        window.clearTimeout(idleTimeoutRef.current);
-      }
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener("touchcancel", handleTouchEnd);
+      resetTrail();
     };
-  }, []);
+  }, [cellSize]);
 
   const cells = useMemo(() => {
     if (!gridSize.rows || !gridSize.cols) return [];
