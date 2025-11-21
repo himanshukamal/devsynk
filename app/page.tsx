@@ -10,13 +10,22 @@ import {
 } from "react";
 
 const NAV_LINKS = ["About", "Services", "Pricing", "Contact"];
-const DEFAULT_CELL_SIZE = 100;
+const DEFAULT_CELL_SIZE = 90;
 const TRAIL_LIMIT = 5;
-const RANDOM_COLORS = ["accent-a", "accent-b", "accent-c", "accent-d"];
-const RANDOM_CELL_COUNT = 6;
+const RANDOM_COLORS = [
+  "accent-a",
+  "accent-b",
+  "accent-c",
+  "accent-d",
+  "accent-e",
+  "accent-f",
+  "accent-g",
+  "accent-h",
+];
+const RANDOM_CELL_COUNT = 10;
 
 type GridCell = { row: number; col: number };
-type ColoredCell = GridCell & { tone: string; id: string };
+type ColoredCell = GridCell & { tone: string; id: string; delay: number };
 
 const readCellSize = () => {
   if (typeof window === "undefined") return DEFAULT_CELL_SIZE;
@@ -91,7 +100,7 @@ export default function Home() {
       idleTimeoutRef.current = window.setTimeout(() => {
         setShowTrail(false);
         setTrail((prev) => (prev.length ? [prev[prev.length - 1]] : []));
-      }, 250);
+      }, 180);
     };
 
     const handlePointerLeave = () => {
@@ -146,7 +155,8 @@ export default function Home() {
       const id = `${Date.now()}-${result.length}-${Math.random()
         .toString(36)
         .slice(2, 8)}`;
-      result.push({ row, col, tone, id });
+      const delay = Math.floor(Math.random() * 2000);
+      result.push({ row, col, tone, id, delay });
     }
 
     setColoredCells(result);
@@ -155,7 +165,9 @@ export default function Home() {
   useEffect(() => {
     buildColoredCells();
     if (!gridSize.rows || !gridSize.cols) return;
-    const intervalId = window.setInterval(buildColoredCells, 1600);
+    const intervalId = window.setInterval(() => {
+      setTimeout(buildColoredCells, Math.random() * 1200);
+    }, 3600);
     return () => window.clearInterval(intervalId);
   }, [buildColoredCells, gridSize]);
 
@@ -194,6 +206,7 @@ export default function Home() {
                   height: `${cellSize}px`,
                   top: `${cell.row * cellSize}px`,
                   left: `${cell.col * cellSize}px`,
+                  animationDelay: `${cell.delay}ms`,
                 } as CSSProperties
               }
             />
@@ -266,13 +279,13 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="hero__content mt-[50px]">
-        
-        <h1>Web Experiences that don’t just feel good - They Perform .</h1>
-        <p>
+      <section className="flex flex-col text-center items-center gap-6 mt-[50px] max-w-[800px]">
+        <p className="text-4xl">DevSynk</p>
+        <p className="text-3xl">Fast, custom websites built for conversion and growth. No templates—just precision craftsmanship.</p>
+        {/* <p>
         custom-built, high-performance websites and application designed to convert, engage,and scale your business. No templates. just powerful digital experiences.
-        </p>
-        <button type="button" className="hero__cta">
+        </p> */}
+        <button type="button" className="bg-[#21303f] px-4 rounded-2xl py-2 text-white w-fit items-center justify-center">
           Let&apos;s Connect
         </button>
       </section>

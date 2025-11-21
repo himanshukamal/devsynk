@@ -7,15 +7,17 @@
   --grid-line: #d6d8df;
   --mask-start: #e0e1e2;
   --mask-end: #ffffff;
-  --square-faint: rgba(56, 73, 89, 0.03);
-  --square-soft: rgba(56, 73, 89, 0.05);
-  --square-mid: rgba(56, 73, 89, 0.08);
-  --square-strong: rgba(56, 73, 89, 0.12);
-  --square-outline: rgba(56, 73, 89, 0.09);
-  --square-accent-a: rgba(56, 73, 89, 0.12);
-  --square-accent-b: rgba(56, 73, 89, 0.09);
-  --square-accent-c: rgba(56, 73, 89, 0.06);
-  --square-accent-d: rgba(56, 73, 89, 0.04);
+  --square-faint: rgba(56, 73, 89, 0.02);
+  --square-soft: rgba(56, 73, 89, 0.04);
+  --square-mid: rgba(56, 73, 89, 0.06);
+  --square-strong: rgba(56, 73, 89, 0.08);
+  --square-bold: rgba(56, 73, 89, 0.1);
+  --square-deep: rgba(56, 73, 89, 0.12);
+  --square-accent-a: rgba(56, 73, 89, 0.15);
+  --square-accent-b: rgba(56, 73, 89, 0.11);
+  --square-accent-c: rgba(56, 73, 89, 0.07);
+  --square-accent-d: rgba(56, 73, 89, 0.05);
+  --cell-size: 90px;
 }
 
 * {
@@ -25,14 +27,9 @@
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: var(--font-geist-sans, "Inter", -apple-system, BlinkMacSystemFont, sans-serif);
+  font-family: var(--font-roboto-sans, "Roboto", -apple-system, BlinkMacSystemFont, sans-serif);
   color: var(--color-deep);
   background-color: var(--color-light);
-  background-image:
-    linear-gradient(var(--grid-line) 0, var(--grid-line) 2px, transparent 2px),
-    linear-gradient(90deg, var(--grid-line) 0, var(--grid-line) 2px, transparent 2px);
-  background-size: 100px 100px;
-  background-position: 0 0, 0 0;
 }
 
 main {
@@ -66,16 +63,6 @@ main {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background:
-    radial-gradient(
-      circle at 50% 45%,
-      rgba(255, 255, 255, 0.95) 0%,
-      rgba(255, 255, 255, 0.85) 35%,
-      rgba(255, 255, 255, 0.2) 65%,
-      rgba(255, 255, 255, 0) 80%
-    ),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 40%),
-    linear-gradient(0deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 40%);
 }
 
 .hero__grid-canvas {
@@ -90,7 +77,6 @@ main {
   border-radius: 0px;
   background: transparent;
   opacity: 0;
-  transition: opacity 0.5s ease, background 0.5s ease;
   z-index: 0;
 }
 
@@ -99,26 +85,42 @@ main {
   z-index: -1;
   mix-blend-mode: multiply;
   background: var(--square-mid);
-  animation: accentPulse 2.2s ease forwards;
+  animation: accentPulse 7s cubic-bezier(0.45, 0, 0.2, 1) forwards;
 }
 
 .hero__grid-cell--accent-a { background: var(--square-accent-a); }
 .hero__grid-cell--accent-b { background: var(--square-accent-b); }
 .hero__grid-cell--accent-c { background: var(--square-accent-c); }
 .hero__grid-cell--accent-d { background: var(--square-accent-d); }
+.hero__grid-cell--accent-e { background: rgba(56, 73, 89, 0.03); }
+.hero__grid-cell--accent-f { background: rgba(56, 73, 89, 0.06); }
+.hero__grid-cell--accent-g { background: rgba(56, 73, 89, 0.09); }
+.hero__grid-cell--accent-h { background: rgba(56, 73, 89, 0.12); }
 
 @keyframes accentPulse {
   0% {
     opacity: 0;
     transform: scale(0.94);
   }
+  20% {
+    opacity: 0.8;
+    transform: scale(0.985);
+  }
   35% {
-    opacity: 0.85;
+    opacity: 0.95;
     transform: scale(1);
   }
-  65% {
+  55% {
     opacity: 0.85;
-    transform: scale(1.01);
+    transform: scale(1.008);
+  }
+  75% {
+    opacity: 0.65;
+    transform: scale(1.013);
+  }
+  90% {
+    opacity: 0.3;
+    transform: scale(1.03);
   }
   100% {
     opacity: 0;
@@ -128,16 +130,22 @@ main {
 
 .hero__grid-cell--trail {
   opacity: 0.8;
+  transition:
+    opacity 0.08s ease-out,
+    background 0.08s ease-out;
 }
 
-.hero__grid-cell--trail-1 { background: var(--square-mid); }
-.hero__grid-cell--trail-2 { background: var(--square-soft); }
-.hero__grid-cell--trail-3 { background: var(--square-faint); }
-.hero__grid-cell--trail-4 { background: rgba(232, 236, 242, 0.6); }
+.hero__grid-cell--trail-1 { background: var(--square-accent-a); }
+.hero__grid-cell--trail-2 { background: var(--square-accent-b); }
+.hero__grid-cell--trail-3 { background: var(--square-accent-c); }
+.hero__grid-cell--trail-4 { background: var(--square-mid); }
 
 .hero__grid-cell--active {
   opacity: 1;
-  background: var(--square-strong);
+  background: rgba(56, 73, 89, 0.2);
+  transition:
+    opacity 0.06s ease-out,
+    background 0.06s ease-out;
 }
 
 .hero__nav {
