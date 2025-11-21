@@ -254,8 +254,9 @@ export default function Home() {
         <div className="hero__nav-inner">
           <div className="hero__brand">
            
-            <span className="hero__brand-text">
-              <Image src={"/devsynkLogoLight.png"} alt="DevSync Logo" width={219} height={51} />
+            <span className="hero__brand-text flex items-center gap-1">
+              <Image src={"/Frame 55.png"} alt="DevSync Logo" width={40} height={40} />
+              <p className="text-white">DevSynk</p>
             </span>
           </div>
           <nav className="hero__links">
@@ -280,12 +281,13 @@ export default function Home() {
       </header>
 
       <section className="flex flex-col text-center items-center gap-6 mt-[50px] max-w-[800px]">
-        <p className="text-4xl">DevSynk</p>
-        <p className="text-3xl">Fast, custom websites built for conversion and growth. No templates—just precision craftsmanship.</p>
+        <Image src={"/Frame 55.png"} alt="DevSync Logo" width={80} height={80} />
+        <p className="text-4xl font-medium">DevSynk</p>
+        <p className="text-3xl font-regular">Fast, custom websites built for conversion and growth. No templates—just precision craftsmanship.</p>
         {/* <p>
         custom-built, high-performance websites and application designed to convert, engage,and scale your business. No templates. just powerful digital experiences.
         </p> */}
-        <button type="button" className="bg-[#21303f] px-4 rounded-2xl py-2 text-white w-fit items-center justify-center">
+        <button type="button" className="bg-[#21303f] px-4 rounded-[8px] py-2 text-white w-fit items-center justify-center z-20">
           Let&apos;s Connect
         </button>
       </section>

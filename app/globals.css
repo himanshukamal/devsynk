@@ -149,12 +149,11 @@ main {
 }
 
 .hero__nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 86px;
-  z-index: 5;
+  position: absolute;
+  top: 24px;
+  width: 1200px;
+  height: 62px;
+  z-index: 15;
   border-radius: 0;
   background-color: var(--color-pill);
   color: #f6f8fb;
@@ -162,7 +161,10 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 20px 40px rgba(56, 73, 89, 0.25);
+  /* box-shadow: 0 20px 40px rgba(56, 73, 89, 0.25); */
+  max-width: 1200px;
+  border-radius: 8px;
+  margin: 0 auto;
   
 }
 
@@ -192,7 +194,7 @@ main {
 
 .hero__brand {
   position: relative;
-  z-index: 5;
+  z-index: 16;
   display: flex;
   align-items: center;
   gap: 0.85rem;
@@ -212,10 +214,10 @@ main {
 
 .hero__links {
   position: relative;
-  z-index: 5;
+  z-index: 16;
   display: flex;
   gap: 1.5rem;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .hero__links a {
@@ -290,7 +292,7 @@ main {
 
 .hero__content {
   position: relative;
-  z-index: 4;
+  z-index: 14;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -301,7 +303,7 @@ main {
 
 .hero__symbol {
   position: relative;
-  z-index: 4;
+  z-index: 14;
   color: var(--color-deep);
   opacity: 0.8;
 }
@@ -321,7 +323,7 @@ main {
 
 .hero__cta {
   position: relative;
-  z-index: 6;
+  z-index: 17;
   border: none;
   border-radius: 999px;
   background: var(--color-pill);
