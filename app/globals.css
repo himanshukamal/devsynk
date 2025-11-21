@@ -348,7 +348,8 @@ main {
 
   .hero__nav {
     flex-direction: column;
-    
+    width: 98%;
+    margin: 4px auto;
   }
 
   .hero__content {
@@ -362,6 +363,12 @@ main {
 }
 
 @media (max-width: 900px) {
+  .hero__nav {
+    max-width: 98%;
+    flex-direction: column;
+    width: 98%;
+    margin: 4px auto;
+  }
   .hero__links {
     display: none;
   }
