@@ -298,7 +298,7 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="flex flex-col text-center items-center gap-6 mt-[100px] lg:mt-[50px] max-w-[800px]">
+      <section className="hero__content-panel flex flex-col text-center items-center gap-6 mt-[100px] lg:mt-[50px] max-w-[800px]">
         <Image src={"/Frame 55.png"} alt="DevSync Logo" width={80} height={80} />
         <p className="text-4xl font-medium">DevSynk</p>
         <p className="text-3xl font-regular">Fast, custom websites built for conversion and growth. No templates—just precision craftsmanship.</p>
